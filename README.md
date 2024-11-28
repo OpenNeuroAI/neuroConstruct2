@@ -1,2 +1,3 @@
 # neuroConstruct2
-neuroConstruct2
+
+Just some random ideas...
