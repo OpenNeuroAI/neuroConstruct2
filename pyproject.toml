@@ -10,7 +10,7 @@ readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.10"
-dependencies = ["numpy", "matplotlib", "jsonschema"]
+dependencies = ["numpy", "matplotlib", "jsonschema", "pyvista", "pyneuroml"]
 
 [project.optional-dependencies]
 dev = ["ruff"]
