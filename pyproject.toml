@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "neuroConstruct2"
+version = "0.0.1"
+description = "A reimplementation of neuroConstruct in Python, with support for many more model types"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+dependencies = ["numpy", "matplotlib", "jsonschema"]
+
+[project.optional-dependencies]
+dev = ["ruff"]
+
+[project.scripts]
+nC2 = "neuroConstruct2.neuromlmodel:main"
+
+[tool.setuptools]
+packages = ["neuroConstruct2"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
