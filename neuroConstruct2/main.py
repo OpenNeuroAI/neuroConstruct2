@@ -24,6 +24,21 @@ def parse_args(argv=None):
     return parser.parse_args(argv)
 
 
+def open_3d_view(model_file):
+    """Open the PyVista viewer for model_file in a separate window.
+
+    plotter.show() needs the main thread, which pywebview already uses in native
+    mode, so the viewer runs as a separate process.
+    """
+    import subprocess
+    import sys
+
+    subprocess.Popen(
+        [sys.executable, "-m", "neuroConstruct2.neuromlmodel", str(model_file)]
+    )
+    ui.notify(f"Opening 3D view of {model_file}...")
+
+
 def main(model_file=None, nogui=False):
     # Console entry point (nC2): NiceGUI's native mode re-imports the main module
     # in a child process, which needs the __main__/__mp_main__ guard below. The
@@ -46,6 +61,7 @@ def main(model_file=None, nogui=False):
     with ui.tabs().classes("w-full") as tabs:
         model = ui.tab("Model info")
         instance = ui.tab("Instance")
+        three_d = ui.tab("3D View")
 
     with ui.tab_panels(tabs, value=instance).classes("w-full"):
         with ui.tab_panel(model):
@@ -59,11 +75,17 @@ def main(model_file=None, nogui=False):
             print(model_info)  # print to console for debugging
 
             # Add a button with label info
+            info_html = model_info.replace("\n", "<br>")
             ui.button(
                 "Info",
-                on_click=lambda: ui.html(
-                    "<pre>{model_info.replace('\n', '<br>')}</pre>"
-                ),
+                on_click=lambda: ui.html(f"<pre>{info_html}</pre>"),
+            )
+
+        with ui.tab_panel(three_d):
+            ui.label("3D view of the model")
+            ui.button(
+                "Open 3D view",
+                on_click=lambda: open_3d_view(model_file),
             )
 
     if nogui:
