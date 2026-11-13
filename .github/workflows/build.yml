@@ -28,6 +28,9 @@ jobs:
     - name: Test neuroConstruct2
       run: |
 
+        pip install --upgrade pip
+        pip install ruff
+        
         ./test_all.sh # also does pip install . and ruff check
         
       
