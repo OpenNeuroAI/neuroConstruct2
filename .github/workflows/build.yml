@@ -30,11 +30,13 @@ jobs:
 
         pip install --upgrade pip
         pip install ruff
-        
+
         ./test_all.sh # also does pip install . and ruff check
+      shell: bash
         
       
     - name: Print info on files
       run: |
         pip list
         ls -alt
+      shell: bash
