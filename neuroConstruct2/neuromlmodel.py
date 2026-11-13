@@ -205,10 +205,29 @@ def add_neuroml_model(
             plotter.add_mesh(glyphs, color=color)
 
 
+def build_plotter(nml_file, somas_only=False, **plotter_kwargs):
+    """Create a pv.Plotter showing nml_file, with background, axes and camera set.
+
+    Shared by the stand-alone viewer (main) and the embedded trame viewer.
+    """
+    plotter = pv.Plotter(**plotter_kwargs)
+
+    add_neuroml_model(
+        plotter,
+        nml_file,
+        somas_only=somas_only,
+    )
+    plotter.set_background("white")
+    plotter.add_axes()
+
+    plotter.camera_position = "xy"
+    plotter.camera.roll = 0
+    plotter.camera.elevation = 5
+
+    return plotter
+
+
 def main():
-
-    plotter = pv.Plotter()
-
     c302_nml = "NeuroML2/c302_D_Full.net.nml"
 
     show_gui = True
@@ -224,17 +243,7 @@ def main():
     else:
         nml_file = c302_nml
 
-    add_neuroml_model(
-        plotter,
-        nml_file,
-        somas_only=False,
-    )
-    plotter.set_background("white")
-    plotter.add_axes()
-
-    plotter.camera_position = "xy"
-    plotter.camera.roll = 0
-    plotter.camera.elevation = 5
+    plotter = build_plotter(nml_file)
 
     if show_gui:
         plotter.show()
