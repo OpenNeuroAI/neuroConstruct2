@@ -1,3 +1,5 @@
 # neuroConstruct2
 
-Just some random ideas...
+A reimplementation of [neuroConstruct](https://github.com/NeuralEnsemble/neuroConstruct) in Python, with support for many more model types.
+
+**Work in progress...**
