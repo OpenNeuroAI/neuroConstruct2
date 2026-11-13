@@ -2,6 +2,8 @@ import argparse
 
 from nicegui import ui
 
+from neuroml.utils import get_summary
+
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(
@@ -41,7 +43,28 @@ def main(model_file=None, nogui=False):
         "font-size: 18px; font-weight: bold; margin-bottom: 20px;"
     )
 
-    ui.label(f"Model file: {model_file}").style("font-size: 14px; margin-bottom: 10px;")
+    with ui.tabs().classes("w-full") as tabs:
+        model = ui.tab("Model info")
+        instance = ui.tab("Instance")
+
+    with ui.tab_panels(tabs, value=instance).classes("w-full"):
+        with ui.tab_panel(model):
+            ui.label(f"Model file: {model_file}").style(
+                "font-size: 14px; margin-bottom: 10px;"
+            )
+
+        with ui.tab_panel(instance):
+            ui.label("Instance info")
+            model_info = get_summary(model_file)
+            print(model_info)  # print to console for debugging
+
+            # Add a button with label info
+            ui.button(
+                "Info",
+                on_click=lambda: ui.html(
+                    "<pre>{model_info.replace('\n', '<br>')}</pre>"
+                ),
+            )
 
     if nogui:
         print(f"Loaded {model_file}; not opening GUI (-nogui)")

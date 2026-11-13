@@ -1,3 +1,5 @@
 /build
 /neuroConstruct2.egg-info
 /neuroConstruct2/__pycache__
+/tests/NeuroML2/*.dat
+/tests/NeuroML2/report*.txt
